@@ -1,41 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites errors="1"
+<testsuites errors="0"
             failures="0"
-            tests="1">
+            tests="0">
 
   <testsuite name="command_queue"
-    errors="1" failures="0" hostname="" id="" package="command_queue" skipped="0"
-    tests="1" time="3.091" timestamp="">
-  
-    <testcase name="function" classname="command_queue" time="3.091" assertions="2">
-
-    
-
-    
-    <error message="waitForElementVisible is not defined" type="error"><![CDATA[
-    ReferenceError: waitForElementVisible is not defined
-    at uploadFile (D:\Documents\CODING\TDL-Exam\scripts\tests\command_queue.js:28:13)
-    at Object.function (D:\Documents\CODING\TDL-Exam\scripts\tests\command_queue.js:14:9)
-    at Context.call (D:\Documents\CODING\TDL-Exam\scripts\node_modules\nightwatch\lib\testsuite\context.js:379:35)
-    at TestCase.run (D:\Documents\CODING\TDL-Exam\scripts\node_modules\nightwatch\lib\testsuite\testcase.js:49:31)
-    at Runnable.__runFn (D:\Documents\CODING\TDL-Exam\scripts\node_modules\nightwatch\lib\testsuite\index.js:376:80)
-    at Runnable.run (D:\Documents\CODING\TDL-Exam\scripts\node_modules\nightwatch\lib\testsuite\runnable.js:123:21)
-    at TestSuite.createRunnable (D:\Documents\CODING\TDL-Exam\scripts\node_modules\nightwatch\lib\testsuite\index.js:443:33)
-    at TestSuite.handleRunnable (D:\Documents\CODING\TDL-Exam\scripts\node_modules\nightwatch\lib\testsuite\index.js:448:18)
-    at D:\Documents\CODING\TDL-Exam\scripts\node_modules\nightwatch\lib\testsuite\index.js:376:21
-    at processTicksAndRejections (internal/process/task_queues.js:97:5)
-    ]]></error>
-    
-    </testcase>
+    errors="0" failures="0" hostname="" id="" package="command_queue" skipped="0"
+    tests="0" time="0.000" timestamp="">
   
 
-  
-    <system-err>
-        ReferenceError: waitForElementVisible is not defined
-       at uploadFile (D:\Documents\CODING\TDL-Exam\scripts\tests\command_queue.js:28:13)
-       at Object.function (D:\Documents\CODING\TDL-Exam\scripts\tests\command_queue.js:14:9)
-       at processTicksAndRejections (internal/process/task_queues.js:97:5)
-    </system-err>
   
 
     

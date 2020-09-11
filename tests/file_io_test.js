@@ -1,46 +1,45 @@
 module.exports = {
 	function(client) {
 		const selectors = {
-			fileInput: 'input[type="file"]',
-			downloadLink: 'a[href*="https://file.io"]'
+			countrySelection: '[alt="United States"]',
+			facebook: '[title="Facebook"]',
+			twitter: '[title="Twitter"]',
+			insagram: '[title="Instagram"]',
+			pinterest: '[title="Pinterest"]'
 		};
 
-		const filePath = ['.', 'assets', 'alpacaHighRes.jpg'];
 		const timeout = 5 * 1000;
-		const uploadTimeout = 10 * 1000;
 
 		prepare();
-		uploadFile();
-		openLink();
+		region();
+		//socialMediaTest();
 
 		function prepare() {
 			client
-				.url('https://www.file.io/')
+				.maximizeWindow()
+				.url('https://www.bestbuy.com/')
 				.waitForElementVisible('body', timeout)
-				.waitForElementPresent(selectors.fileInput, timeout);
+				.waitForElementPresent(selectors.countrySelection, timeout);
 		}
 
-		function uploadFile() {
-			client
-				.setValue(selectors.fileInput, require('path').resolve(...filePath))
-				.waitForElementVisible(selectors.downloadLink, uploadTimeout);
-		}
-
-		function openLink() {
-			client.getText(selectors.downloadLink, result => {
-				openNewTab(result.value);
-
-				function openNewTab(url) {
-					client
-						.execute(
-							function (url) {
-								window.open(url);
-							},
-							[url]
-						)
-						.pause(3 * 1000);
-				}
-			});
+		function region() {
+			client.click(selectors.countrySelection).pause(timeout);
 		}
 	}
 };
+// 		function socialMediaTest() {
+// 			client.getText(facebook, result => {
+// 				openNewTab(result.value);
+
+// 				var url;
+// 				client.url(function (result) {
+// 					url = result.value;
+// 				});
+// 				Browser.perform(done => {
+// 					console.log(url);
+// 					done();
+// 				})
+// 			})
+// 		}
+// 	}
+// }
