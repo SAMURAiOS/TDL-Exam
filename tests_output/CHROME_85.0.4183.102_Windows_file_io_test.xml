@@ -5,9 +5,11 @@
 
   <testsuite name="file_io_test"
     errors="0" failures="0" hostname="" id="" package="file_io_test" skipped="0"
-    tests="1" time="11.66" timestamp="">
+    tests="1" time="14.58" timestamp="">
   
-    <testcase name="function" classname="file_io_test" time="11.66" assertions="2">
+    <testcase name="function" classname="file_io_test" time="14.58" assertions="3">
+
+    
 
     
 

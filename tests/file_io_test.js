@@ -9,10 +9,20 @@ module.exports = {
 		};
 
 		const timeout = 5 * 1000;
+		const productsArray = [
+			'MacBook',
+			'Xiaomi',
+			'Apple',
+			'Can',
+			'Car',
+			'Shirt',
+			'Shoes',
+			'Food'
+		];
 
 		prepare();
 		region();
-		//socialMediaTest();
+		shopSearch();
 
 		function prepare() {
 			client
@@ -25,21 +35,13 @@ module.exports = {
 		function region() {
 			client.click(selectors.countrySelection).pause(timeout);
 		}
+
+		function shopSearch() {
+			client
+				.url('https://www.bestbuy.com/', timeout)
+				.waitForElementVisible('body', timeout)
+				.setValue('input[class="search-input"]', [productsArray[1], client.Keys.ENTER]),
+				timeout;
+		}
 	}
 };
-// 		function socialMediaTest() {
-// 			client.getText(facebook, result => {
-// 				openNewTab(result.value);
-
-// 				var url;
-// 				client.url(function (result) {
-// 					url = result.value;
-// 				});
-// 				Browser.perform(done => {
-// 					console.log(url);
-// 					done();
-// 				})
-// 			})
-// 		}
-// 	}
-// }
