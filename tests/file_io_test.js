@@ -2,24 +2,27 @@ module.exports = {
 	function(client) {
 		const selectors = {
 			countrySelection: '[alt="United States"]',
+			searhTextBox: 'input[class="search-input"]',
 			searchSubmit: 'button[type="submit"]',
+			clearSearch: '[class="header-close-icon"]',
 			emailNotificationPopUp: 'button[class="c-close-icon  c-modal-close-icon"]',
 			buttonAddToCart:
 				'button[class="btn btn-primary btn-sm btn-block btn-leading-ficon add-to-cart-button"]',
-			summaryPopUp: '[href="/cart"]',
-			cartProductsQuantity: 'class="btn-default-link link-styled-button cart-item__save"'
+			continueShopping: '[class="btn-default-link continue-shopping"]',
+			cartLink: '[href="https://www.bestbuy.com/cart"]',
+			cartProductsQuantity: 'class="btn-default-link link-styled-button cart-item__save"',
+			cartNumberOfProducts: 'div[class="dot"]'
 		};
-
 		const timeout = 5 * 1000;
 		const productsArray = [
-			'MacBook',
-			'Coffee maker',
-			'Garden pot',
-			'Pencil',
-			'Car',
-			'Shirt',
-			'Shoes',
-			'Food'
+			'Elgato - Wave:3 Wired Cardioid Condenser USB Microphone',
+			'Super Mario 3D All-Stars - Nintendo Switch, Nintendo Switch Lite',
+			'LoungeFly - Pikachu Expressions Backpack - Multicolor',
+			'Apple - HomePod - Space Gray',
+			'Nintendo - Switch 32GB Lite - Turquoise',
+			'PowerA - Zelda: Breath of the Wild Edition Controller for Nintendo Switch - Black',
+			'Amazon - Fire TV Stick with all-new Alexa Voice Remote Streaming Media Player - Black',
+			'Braun - BrewSense 12-Cup Coffee Maker - Stainless Steel/White'
 		];
 		const socialMediaTitles = {
 			facebook: 'a[title="Facebook"]',
@@ -27,8 +30,6 @@ module.exports = {
 			instagram: 'a[title="Instagram"]',
 			pinterest: 'a[title="Pinterest"]'
 		};
-		const randomElement = productsArray[Math.floor(Math.random() * productsArray.length)];
-		const totalprice = { cartvalue: 'div[class="price-summary__total-value"]' };
 
 		prepare();
 		emailPopUpWindow();
@@ -49,7 +50,6 @@ module.exports = {
 		urlEqualityPinterest();
 		closeTab(0);
 		shopSearch();
-		addToCart();
 		priceSummary();
 
 		function prepare() {
@@ -85,7 +85,7 @@ module.exports = {
 		}
 
 		function urlEqualityTwitter() {
-			client.expect.url().to.not.contain('https://www.twitter.com/BestBuy');
+			client.expect.url().to.contain('https://twitter.com/');
 		}
 
 		function urlEqualityInstagram() {
@@ -106,28 +106,28 @@ module.exports = {
 		}
 
 		function shopSearch() {
-			client
-				.url('https://www.bestbuy.com/', timeout)
-				.waitForElementVisible('body', timeout)
-				.setValue('input[class="search-input"]', [randomElement])
-				.pause(5000)
-				.click(selectors.searchSubmit)
-				.pause(timeout);
-		}
-
-		function addToCart() {
-			client
-				.waitForElementVisible('body', timeout)
-				.click(selectors.buttonAddToCart)
-				.pause(timeout);
+			for (let i = 0; i < productsArray.length; i++) {
+				client
+					.waitForElementVisible('body', timeout)
+					.setValue(selectors.searhTextBox, [productsArray[i]])
+					.pause(5000)
+					.click(selectors.searchSubmit)
+					.pause(5000)
+					.click(selectors.buttonAddToCart)
+					.pause(5000)
+					.click(selectors.continueShopping)
+					.pause(timeout)
+					.click(selectors.clearSearch);
+			}
 		}
 
 		function priceSummary() {
-			client
-				.waitForElementVisible('body', timeout)
-				.click(selectors.summaryPopUp)
-				.pause(timeout);
-			// console.log(totalprice.cartvalue);
+			client.click(selectors.cartLink);
+			client.getText('div[class="price-summary__total-value"]', function (result) {
+				text = result.value;
+				console.log(result);
+				//client.takeScreenshot('screenshot.png');
+			});
 		}
 	}
 };

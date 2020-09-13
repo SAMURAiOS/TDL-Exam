@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites errors="0"
+<testsuites errors="1"
             failures="0"
             tests="1">
 
   <testsuite name="file_io_test"
-    errors="0" failures="0" hostname="" id="" package="file_io_test" skipped="0"
-    tests="1" time="68.28" timestamp="">
+    errors="1" failures="0" hostname="" id="" package="file_io_test" skipped="0"
+    tests="1" time="40.89" timestamp="">
   
-    <testcase name="function" classname="file_io_test" time="68.28" assertions="10">
+    <testcase name="function" classname="file_io_test" time="40.89" assertions="4">
 
     
 
@@ -16,21 +16,28 @@
     
 
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
+    <error message="client.takeScreenshot is not a function" type="error"><![CDATA[
+    TypeError: client.takeScreenshot is not a function
+    at NightwatchAPI.&lt;anonymous&gt; (D:\Documents\CODING\TDL-Exam\scripts\tests\file_io_test.js:129:12)
+    at GetText.complete (D:\Documents\CODING\TDL-Exam\scripts\node_modules\nightwatch\lib\element\command.js:210:27)
+    at successHandler (D:\Documents\CODING\TDL-Exam\scripts\node_modules\nightwatch\lib\api\element-commands\_baseElementCommand.js:25:45)
+    at PeriodicPromise.perform (D:\Documents\CODING\TDL-Exam\scripts\node_modules\nightwatch\lib\utils\periodic-promise.js:105:29)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at async PeriodicPromise.runAction (D:\Documents\CODING\TDL-Exam\scripts\node_modules\nightwatch\lib\utils\periodic-promise.js:48:22)
+    at async PeriodicPromise.runAction (D:\Documents\CODING\TDL-Exam\scripts\node_modules\nightwatch\lib\utils\periodic-promise.js:51:16)
+    ]]></error>
     
     </testcase>
   
 
+  
+    <system-err>
+        TypeError: client.takeScreenshot is not a function
+   - writing an ES6 async test case? - keep in mind that commands return a Promise; 
+   - writing unit tests? - make sure to specify &#34;unit_tests_mode=true&#34; in your config.
+       at NightwatchAPI.&lt;anonymous&gt; (D:\Documents\CODING\TDL-Exam\scripts\tests\file_io_test.js:129:12)
+       at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    </system-err>
   
 
     
