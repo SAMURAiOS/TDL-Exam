@@ -16,13 +16,13 @@ module.exports = {
 		const timeout = 5 * 1000;
 		const productsArray = [
 			'Elgato - Wave:3 Wired Cardioid Condenser USB Microphone',
-			'Super Mario 3D All-Stars - Nintendo Switch, Nintendo Switch Lite',
-			'LoungeFly - Pikachu Expressions Backpack - Multicolor',
-			'Apple - HomePod - Space Gray',
-			'Nintendo - Switch 32GB Lite - Turquoise',
-			'PowerA - Zelda: Breath of the Wild Edition Controller for Nintendo Switch - Black',
-			'Amazon - Fire TV Stick with all-new Alexa Voice Remote Streaming Media Player - Black',
-			'Braun - BrewSense 12-Cup Coffee Maker - Stainless Steel/White'
+			'Super Mario 3D All-Stars - Nintendo Switch, Nintendo Switch Lite'
+			// 'LoungeFly - Pikachu Expressions Backpack - Multicolor'
+			// 'Apple - HomePod - Space Gray',
+			// 'Nintendo - Switch 32GB Lite - Turquoise',
+			// 'PowerA - Zelda: Breath of the Wild Edition Controller for Nintendo Switch - Black',
+			// 'Amazon - Fire TV Stick with all-new Alexa Voice Remote Streaming Media Player - Black',
+			// 'Braun - BrewSense 12-Cup Coffee Maker - Stainless Steel/White'
 		];
 		const socialMediaTitles = {
 			facebook: 'a[title="Facebook"]',
@@ -33,23 +33,23 @@ module.exports = {
 
 		prepare();
 		emailPopUpWindow();
-		openMediaLink(socialMediaTitles.facebook);
-		windowSwith();
-		urlEqualityFacebook();
-		closeTab(0);
-		openMediaLink(socialMediaTitles.twitter);
-		windowSwith();
-		urlEqualityTwitter();
-		closeTab(0);
-		openMediaLink(socialMediaTitles.instagram);
-		windowSwith();
-		urlEqualityInstagram();
-		closeTab(0);
-		openMediaLink(socialMediaTitles.pinterest);
-		windowSwith();
-		urlEqualityPinterest();
-		closeTab(0);
-		shopSearch();
+		// openMediaLink(socialMediaTitles.facebook);
+		// windowSwith();
+		// urlEqualityFacebook();
+		// closeTab(0);
+		// openMediaLink(socialMediaTitles.twitter);
+		// windowSwith();
+		// urlEqualityTwitter();
+		// closeTab(0);
+		// openMediaLink(socialMediaTitles.instagram);
+		// windowSwith();
+		// urlEqualityInstagram();
+		// closeTab(0);
+		// openMediaLink(socialMediaTitles.pinterest);
+		// windowSwith();
+		// urlEqualityPinterest();
+		// closeTab(0);
+		shopSearch(selectors.cartNumberOfProducts);
 		priceSummary();
 
 		function prepare() {
@@ -105,8 +105,13 @@ module.exports = {
 			});
 		}
 
-		function shopSearch() {
-			for (let i = 0; i < productsArray.length; i++) {
+		function shopSearch(shoppingCartQuantity) {
+			var cartItemQuantity;
+			for (
+				let i = 0, cartItemQuantity = 1;
+				i < productsArray.length;
+				i++, cartItemQuantity++
+			) {
 				client
 					.waitForElementVisible('body', timeout)
 					.setValue(selectors.searhTextBox, [productsArray[i]])
@@ -117,10 +122,19 @@ module.exports = {
 					.pause(5000)
 					.click(selectors.continueShopping)
 					.pause(timeout)
-					.click(selectors.clearSearch);
+					.click(selectors.clearSearch)
+					.pause(timeout, () => {
+						console.log(`Items in cart: ${cartItemQuantity}`);
+					});
 			}
+			client.pause(timeout, () => {
+				if (shoppingCartQuantity == cartItemQuantity) {
+					console.log('Quantity is equal');
+				} else {
+					console.log('Quantity is not equal');
+				}
+			});
 		}
-
 		function priceSummary() {
 			client.click(selectors.cartLink);
 			client.getText('div[class="price-summary__total-value"]', function (result) {
