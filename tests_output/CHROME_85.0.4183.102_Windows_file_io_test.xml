@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuites errors="0"
+<testsuites errors="1"
             failures="0"
             tests="1">
 
   <testsuite name="file_io_test"
-    errors="0" failures="0" hostname="" id="" package="file_io_test" skipped="0"
-    tests="1" time="70.72" timestamp="">
+    errors="1" failures="0" hostname="" id="" package="file_io_test" skipped="0"
+    tests="1" time="77.91" timestamp="">
   
-    <testcase name="function" classname="file_io_test" time="70.72" assertions="5">
+    <testcase name="function" classname="file_io_test" time="77.91" assertions="7">
 
     
 
@@ -17,10 +17,35 @@
 
     
 
+    
+
+    
+
+    
+    <error message="waitForElementVisible is not defined" type="error"><![CDATA[
+    ReferenceError: waitForElementVisible is not defined
+    at removeFromCart (D:\Documents\CODING\TDL-Exam\scripts\tests\file_io_test.js:154:5)
+    at Object.function (D:\Documents\CODING\TDL-Exam\scripts\tests\file_io_test.js:58:4)
+    at Context.call (D:\Documents\CODING\TDL-Exam\scripts\node_modules\nightwatch\lib\testsuite\context.js:379:35)
+    at TestCase.run (D:\Documents\CODING\TDL-Exam\scripts\node_modules\nightwatch\lib\testsuite\testcase.js:49:31)
+    at Runnable.__runFn (D:\Documents\CODING\TDL-Exam\scripts\node_modules\nightwatch\lib\testsuite\index.js:376:80)
+    at Runnable.run (D:\Documents\CODING\TDL-Exam\scripts\node_modules\nightwatch\lib\testsuite\runnable.js:123:21)
+    at TestSuite.createRunnable (D:\Documents\CODING\TDL-Exam\scripts\node_modules\nightwatch\lib\testsuite\index.js:443:33)
+    at TestSuite.handleRunnable (D:\Documents\CODING\TDL-Exam\scripts\node_modules\nightwatch\lib\testsuite\index.js:448:18)
+    at D:\Documents\CODING\TDL-Exam\scripts\node_modules\nightwatch\lib\testsuite\index.js:376:21
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    ]]></error>
     
     </testcase>
   
 
+  
+    <system-err>
+        ReferenceError: waitForElementVisible is not defined
+       at removeFromCart (D:\Documents\CODING\TDL-Exam\scripts\tests\file_io_test.js:154:5)
+       at Object.function (D:\Documents\CODING\TDL-Exam\scripts\tests\file_io_test.js:58:4)
+       at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    </system-err>
   
 
     

@@ -10,10 +10,12 @@ module.exports = {
 				'button[class="btn btn-primary btn-sm btn-block btn-leading-ficon add-to-cart-button"]',
 			continueShopping: '[class="btn-default-link continue-shopping"]',
 			cartLink: '[href="https://www.bestbuy.com/cart"]',
-			cartProductsQuantity: 'class="btn-default-link link-styled-button cart-item__save"',
-			cartNumberOfProducts: 'div[class="dot"]'
+			cartItemRemove:
+				'[class="btn-default-link link-styled-button cart-item__remove"]:first-of-type'
 		};
 		const timeout = 5 * 1000;
+		let cartItemQuantity = 0;
+		let loopCicle = 5;
 		const productsArray = [
 			'cap',
 			'shirt',
@@ -49,8 +51,12 @@ module.exports = {
 		windowSwith();
 		urlEqualityPinterest();
 		closeTab(0);
-		shopSearch(selectors.cartNumberOfProducts);
-		priceSummary();
+		for (let i = 0; i < loopCicle; i++) {
+			shopSearch();
+			priceSummary();
+			takeCartScreeenshot(i);
+			removeFromCart();
+		}
 
 		function prepare() {
 			client
@@ -106,28 +112,47 @@ module.exports = {
 		}
 
 		function shopSearch() {
-			let cartItemQuantity;
-			for (let i = 0, cartItemQuantity = 1;i < productsArray.length;i++, cartItemQuantity++) {
+			for (let i = 0, separateQuantity = 1; i < productsArray.length; i++, cartItemQuantity++, separateQuantity++) {
 				client
 					.waitForElementVisible('body', timeout)
 					.setValue(selectors.searhTextBox, [productsArray[i]])
-					.pause(5000)
+					.pause(2000)
 					.click(selectors.searchSubmit)
-					.pause(5000)
+					.pause(2000)
 					.click(selectors.buttonAddToCart)
-					.pause(5000)
+					.pause(2000)
 					.click(selectors.continueShopping)
+					.pause(2000)
+					.click(selectors.clearSearch, () => {
+						console.log(`Items in cart: ${separateQuantity}`);
+					})
 					.pause(timeout)
-					.click(selectors.clearSearch)
 			}
 		}
+
 		function priceSummary() {
 			client.click(selectors.cartLink);
 			client.getText('div[class="price-summary__total-value"]', function (result) {
 				text = result.value;
 				console.log(result);
-				//client.takeScreenshot('screenshot.png');
 			});
+		}
+
+		function takeCartScreeenshot(value) {
+			client.saveScreenshot(`./screenshots/totalcartvalue_${value}.png`);
+		}
+
+		function removeFromCart() {
+			for (let i = 0; i <= cartItemQuantity; i++) {
+				client
+					.waitForElementVisible('body', timeout)
+					.pause(2000)
+					.click(selectors.cartItemRemove)
+					.pause(2000, () => {
+						console.log(`Items removed from cart: ${cartItemQuantity}`);
+					})
+					.waitForElementVisible('body', timeout);
+			}
 		}
 	}
 };
