@@ -47,8 +47,9 @@ module.exports = {
 				.maximizeWindow()
 				.url('https://www.bestbuy.com/')
 				.waitForElementVisible('body', timeout)
-				.waitForElementPresent(selectors.countrySelection, timeout)
-				.click(selectors.countrySelection).pause(timeout)
+				// .takeScreenshot(`totalcartvalues.png`)
+				// .waitForElementVisible(selectors.countrySelection, false)
+				// .click(selectors.countrySelection).pause(timeout)
 				.perform(() => {
 					closeEmailPopUp();
 				})
@@ -94,7 +95,6 @@ module.exports = {
 
 		function urlEqualityFacebook() {
 			client.expect.url().to.contain('https://www.facebook.com/bestbuy');
-
 		}
 
 		function urlEqualityTwitter() {
@@ -147,8 +147,7 @@ module.exports = {
 		}
 
 		function cartScreenshot(value) {
-			client.saveScreenshot(`./screenshots/totalcartvalue_${value}.png`);
-			// client.takeScreenshot(`./screenshots/totalcartvalue_${value}.png`);
+			client.takeScreenshot(`totalcartvalue_${value}.png`)
 		}
 
 		function removeFromCart() {
