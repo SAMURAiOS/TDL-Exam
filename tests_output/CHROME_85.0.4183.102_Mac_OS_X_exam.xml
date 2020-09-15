@@ -1,16 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites errors="0"
-            failures="1"
+            failures="2"
             tests="1">
 
   <testsuite name="exam"
-    errors="0" failures="1" hostname="" id="" package="exam" skipped="0"
-    tests="1" time="6.298" timestamp="">
+    errors="0" failures="2" hostname="" id="" package="exam" skipped="0"
+    tests="1" time="48.68" timestamp="">
   
-    <testcase name="function" classname="exam" time="6.298" assertions="2">
+    <testcase name="function" classname="exam" time="48.68" assertions="18">
 
-      <failure message="Timed out while waiting for element &lt;image[alt=&#34;United States&#34;]&gt; to be present for 5000 milliseconds. - expected &#34;visible&#34; but got: &#34;not found&#34; (5179ms)">    at prepare (/Users/siatestdevlab/Downloads/TDL-Exam/tests/exam.js:50:6)
-    at Object.function (/Users/siatestdevlab/Downloads/TDL-Exam/tests/exam.js:35:3)
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+      <failure message="Testing if the URL is &#39;https://twitter.com/&#39; in 5000ms - expected &#34;is &#39;https://twitter.com/&#39;&#34; but got: &#34;chrome-search://local-ntp/local-ntp.html&#34; (5107ms)">    at checkLink (/Users/siatestdevlab/Downloads/TDL-Exam/tests/exam.js:114:25)
+    at /Users/siatestdevlab/Downloads/TDL-Exam/tests/exam.js:96:58
+    at Array.forEach (&lt;anonymous&gt;)
+    at Object.&lt;anonymous&gt; (/Users/siatestdevlab/Downloads/TDL-Exam/tests/exam.js:96:27)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)</failure>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+      <failure message="Timed out while waiting for element &lt;button[class=&#34;btn btn-primary btn-sm btn-block btn-leading-ficon add-to-cart-button&#34;]&gt; to be present for 5000 milliseconds. - expected &#34;visible&#34; but got: &#34;not found&#34; (5195ms)">    at shopSearch (/Users/siatestdevlab/Downloads/TDL-Exam/tests/exam.js:191:7)
+    at Object.function (/Users/siatestdevlab/Downloads/TDL-Exam/tests/exam.js:60:4)
     at processTicksAndRejections (internal/process/task_queues.js:97:5)</failure>
 
     
