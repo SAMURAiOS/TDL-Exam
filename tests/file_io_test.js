@@ -137,6 +137,7 @@ module.exports = {
 					.pause(2000)
 					.click(selectors.continueShopping)
 					.pause(2000)
+					// TODO: Use one line function for this
 					.click(selectors.clearSearch, () => {
 						console.log(`Items in cart: ${separateQuantity}`);
 					})
