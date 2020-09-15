@@ -1,23 +1,17 @@
-// TODO: Change the file name to something more appropriate
-// TODO: Use arrow functions wherever it is possible
-// TODO: Remove pauses wherever it is possible and use .waitForElement...() instead
 module.exports = {
-	function(client) {
-		// TODO: Why do use element attribute selectors. Use shortened version, i.e., .class and #id for classes and IDs respectively
+	function (client) {
 		const selectors = {
 			countrySelection: '[alt="United States"]',
 			searhTextBox: 'input[class="search-input"]',
 			searchSubmit: 'button[type="submit"]',
 			clearSearch: '[class="header-close-icon"]',
 			emailNotificationPopUp: 'button[class="c-close-icon  c-modal-close-icon"]',
-			buttonAddToCart:
-				'button[class="btn btn-primary btn-sm btn-block btn-leading-ficon add-to-cart-button"]',
+			buttonAddToCart: 'button[class="btn btn-primary btn-sm btn-block btn-leading-ficon add-to-cart-button"]',
 			continueShopping: '[class="btn-default-link continue-shopping"]',
 			cartLink: '[href="https://www.bestbuy.com/cart"]',
-			cartItemRemove:
-				'[class="btn-default-link link-styled-button cart-item__remove"]:first-of-type'
+			cartTotalPrice: 'div[class="price-summary__total-value"]',
+			cartItemRemove: '[class="btn-default-link link-styled-button cart-item__remove"]:first-of-type'
 		};
-		// TODO: Move these under all arrays and objects
 		const timeout = 5 * 1000;
 		let cartItemQuantity = 0;
 		let loopCicle = 5;
@@ -39,30 +33,13 @@ module.exports = {
 		};
 
 		prepare();
-		emailPopUpWindow();
-		openMediaLink(socialMediaTitles.facebook);
-		windowSwith();
-		urlEqualityFacebook();
-		// TODO: Change to the function we wrote during the course. Remember that .windowHandles() order might change
-		closeTab(0);
-		openMediaLink(socialMediaTitles.twitter);
-		// TODO: Check spelling
-		windowSwith();
-		urlEqualityTwitter();
-		closeTab(0);
-		openMediaLink(socialMediaTitles.instagram);
-		windowSwith();
-		urlEqualityInstagram();
-		closeTab(0);
-		openMediaLink(socialMediaTitles.pinterest);
-		windowSwith();
-		urlEqualityPinterest();
-		closeTab(0);
+		checkSocialMedia()
 		for (let i = 0; i < loopCicle; i++) {
 			shopSearch();
 			priceSummary();
-			takeCartScreeenshot(i);
+			cartScreenshot(i);
 			removeFromCart();
+			cartItemQuantity = 0;
 		}
 
 		function prepare() {
@@ -70,21 +47,20 @@ module.exports = {
 				.maximizeWindow()
 				.url('https://www.bestbuy.com/')
 				.waitForElementVisible('body', timeout)
-				.waitForElementPresent(selectors.countrySelection, timeout);
-				// TODO: Why can't this be put under the first client object and has to be put as a seperate client?
-			client.click(selectors.countrySelection).pause(timeout);
+				.waitForElementPresent(selectors.countrySelection, timeout)
+				.click(selectors.countrySelection).pause(timeout)
+				.perform(() => {
+					closeEmailPopUp();
+				})
 		}
 
-		// TODO: Can be called in prepare() function using .perform(() => emailPopUpWindow)
-		// TODO: Rename to something more proper, e.g., closeEmailPopUp()
-		function emailPopUpWindow() {
+		function closeEmailPopUp() {
 			client
 				.waitForElementVisible('body', timeout)
 				.click(selectors.emailNotificationPopUp)
 				.pause(timeout);
 		}
 
-		// TODO: This can be merged with the urlEquality...() function
 		function openMediaLink(socialLink) {
 			client.click(socialLink).pause(timeout);
 		}
@@ -97,9 +73,28 @@ module.exports = {
 			});
 		}
 
-		// Create a wrapper function these. There is no reason to create a seperate function for each social network
+		function checkSocialMedia() {
+			openMediaLink(socialMediaTitles.facebook);
+			windowSwith();
+			urlEqualityFacebook();
+			closeTab(0);
+			openMediaLink(socialMediaTitles.twitter);
+			windowSwith();
+			urlEqualityTwitter();
+			closeTab(0);
+			openMediaLink(socialMediaTitles.instagram);
+			windowSwith();
+			urlEqualityInstagram();
+			closeTab(0);
+			openMediaLink(socialMediaTitles.pinterest);
+			windowSwith();
+			urlEqualityPinterest();
+			closeTab(0);
+		}
+
 		function urlEqualityFacebook() {
 			client.expect.url().to.contain('https://www.facebook.com/bestbuy');
+
 		}
 
 		function urlEqualityTwitter() {
@@ -113,8 +108,7 @@ module.exports = {
 		function urlEqualityPinterest() {
 			client.expect.url().to.contain('https://www.pinterest.com/bestbuy/');
 		}
-		
-		// TODO: Change to the function we wrote during the course. Remember that .windowHandles() order might change
+
 		function closeTab(label) {
 			client.closeWindow();
 			client.windowHandles(function (result) {
@@ -125,19 +119,18 @@ module.exports = {
 		}
 
 		function shopSearch() {
-			// TODO: Why do you need both i and separateQuantity
 			for (let i = 0, separateQuantity = 1; i < productsArray.length; i++, cartItemQuantity++, separateQuantity++) {
 				client
 					.waitForElementVisible('body', timeout)
+					.waitForElementVisible(selectors.searhTextBox, timeout)
 					.setValue(selectors.searhTextBox, [productsArray[i]])
-					.pause(2000)
 					.click(selectors.searchSubmit)
 					.pause(2000)
+					.waitForElementVisible(selectors.buttonAddToCart)
 					.click(selectors.buttonAddToCart)
-					.pause(2000)
+					.waitForElementVisible(selectors.continueShopping, timeout, false)
 					.click(selectors.continueShopping)
-					.pause(2000)
-					// TODO: Use one line function for this
+					.waitForElementVisible(selectors.clearSearch, timeout)
 					.click(selectors.clearSearch, () => {
 						console.log(`Items in cart: ${separateQuantity}`);
 					})
@@ -147,29 +140,26 @@ module.exports = {
 
 		function priceSummary() {
 			client.click(selectors.cartLink);
-			// TODO: Do not use hardocoded selectors. Use object destructuring. Use arrow functions. Log the correct value.
-			client.getText('div[class="price-summary__total-value"]', function (result) {
+			client.getText(selectors.cartTotalPrice, function (result) {
 				text = result.value;
 				console.log(result);
 			});
 		}
 
-		// TODO: Choose more appropriate function parameter name
-		function takeCartScreeenshot(value) {
+		function cartScreenshot(value) {
 			client.saveScreenshot(`./screenshots/totalcartvalue_${value}.png`);
+			// client.takeScreenshot(`./screenshots/totalcartvalue_${value}.png`);
 		}
 
 		function removeFromCart() {
-			// TODO: Is it really <= not just < cartItemQuantity?
-			for (let i = 0; i <= cartItemQuantity; i++) {
+			for (let i = 0, number = 0; i < cartItemQuantity; i++, number++) {
 				client
-					.waitForElementVisible('body', timeout)
+					.waitForElementVisible(selectors.cartItemRemove, timeout, false)
 					.pause(2000)
-					.click(selectors.cartItemRemove)
-					.pause(2000, () => {
-						console.log(`Items removed from cart: ${cartItemQuantity}`);
+					.click(selectors.cartItemRemove, () => {
+						number++
+						console.log(`Items removed from cart: ${number}`)
 					})
-					.waitForElementVisible('body', timeout);
 			}
 		}
 	}
